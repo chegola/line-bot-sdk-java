@@ -51,6 +51,7 @@ public class EchoApplication {
                                                singletonList(new TextMessage(event.getMessage().getText()))))
                 .execute().body();
         System.out.println("Sent messages: " + apiResponse);
+        this.pushTextMessage();
     }
 
     @EventMapping
