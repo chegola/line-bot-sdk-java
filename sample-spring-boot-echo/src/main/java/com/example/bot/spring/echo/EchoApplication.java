@@ -62,7 +62,7 @@ public class EchoApplication {
     private void pushTextMessage() {
     	
     	System.out.println("push text message:");
-    	Message textMessage = new TextMessage();
+    	Message textMessage = new TextMessage("hello");
         PushMessage pushMessage = new PushMessage("che-gola", textMessage);
         lineMessagingService.pushMessage(pushMessage);
         try {
