@@ -23,10 +23,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.linecorp.bot.client.LineMessagingService;
+import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
@@ -45,8 +47,7 @@ public class EchoApplication {
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
         System.out.println("event: " + event);
-        final BotApiResponse apiResponse = lineMessagingService
-                .replyMessage(new ReplyMessage(event.getReplyToken(),
+        final BotApiResponse apiResponse = lineMessagingService.replyMessage(new ReplyMessage(event.getReplyToken(),
                                                singletonList(new TextMessage(event.getMessage().getText()))))
                 .execute().body();
         System.out.println("Sent messages: " + apiResponse);
@@ -55,5 +56,19 @@ public class EchoApplication {
     @EventMapping
     public void defaultMessageEvent(Event event) {
         System.out.println("event: " + event);
+    }
+    
+    private void pushTextMessage() {
+    	
+    	System.out.println("push text message:");
+    	Message textMessage = new TextMessage();
+        PushMessage pushMessage = new PushMessage("che-gola", textMessage);
+        lineMessagingService.pushMessage(pushMessage);
+        try {
+        	final BotApiResponse apiResponse = lineMessagingService.pushMessage(pushMessage).execute().body();
+        } catch (Exception e) {
+        	System.out.println(e.getMessage());
+        }
+        
     }
 }
