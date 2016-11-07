@@ -51,6 +51,7 @@ public class EchoApplication {
                                                singletonList(new TextMessage(event.getMessage().getText()))))
                 .execute().body();
         System.out.println("Sent messages: " + apiResponse);
+        
         this.pushTextMessage();
     }
 
@@ -63,12 +64,12 @@ public class EchoApplication {
     	
     	System.out.println("push text message:");
     	Message textMessage = new TextMessage("hello");
-        PushMessage pushMessage = new PushMessage("che-gola", textMessage);
+        PushMessage pushMessage = new PushMessage("U6e14cd04d89c0f238bcfbfcbd5f35d25", textMessage);
         lineMessagingService.pushMessage(pushMessage);
         try {
         	final BotApiResponse apiResponse = lineMessagingService.pushMessage(pushMessage).execute().body();
         } catch (Exception e) {
-        	System.out.println(e.getMessage());
+        	System.out.println(e.getMessage()); 
         }
         
     }
