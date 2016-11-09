@@ -52,7 +52,7 @@ public class EchoApplication {
                 .execute().body();
         System.out.println("Sent messages: " + apiResponse);
         
-        this.pushTextMessage();
+        //this.pushTextMessage();
     }
 
     @EventMapping
